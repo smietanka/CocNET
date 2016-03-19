@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace CocNET
 {
@@ -20,6 +21,10 @@ namespace CocNET
         /// <param name="token">Your Clash Of Clans token.</param>
         public CocCore(string token)
         {
+            if(string.IsNullOrEmpty(token))
+            {
+                throw new WebException("Invalid token.");
+            }
             TOKEN = token;
             REQUEST = new Request(token);
         }
