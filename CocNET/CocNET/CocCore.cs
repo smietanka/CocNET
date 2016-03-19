@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CocNET
 {
-    public class Class1
+    public class CocCore
     {
     }
 }
