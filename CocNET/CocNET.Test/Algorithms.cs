@@ -23,7 +23,6 @@ namespace CocNET.Test
         [TestMethod, TestCategory("Algorithms")]
         public void Get_All_Locations_By_Id()
         {
-            //Test
             CocCore myCore = new CocCore(TOKEN);
 
             int id = 32000000;
