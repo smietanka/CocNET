@@ -23,7 +23,9 @@ namespace CocNET.Types
         public int ClanRank { get; set; }
         [JsonProperty("previousClanRank")]
         public int PreviousClanRank { get; set; }
-        [JsonProperty("name")]
-        public Donation Donations { get; set; }
+        [JsonProperty("donations")]
+        public int Donations { get; set; }
+        [JsonProperty("donationsReceived")]
+        public int DonationsReceived { get; set; }
     }
 }

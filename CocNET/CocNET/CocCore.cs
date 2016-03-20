@@ -123,7 +123,7 @@ namespace CocNET
             string sUrl = string.Format("https://api.clashofclans.com/v1/clans/{0}", HttpUtility.UrlEncode(clanTag));
            
             string jsonString = REQUEST.GetJsonString(sUrl);
-            var myClan = JsonConvert.DeserializeObject<Clan>(jsonString);
+            Clan myClan = JsonConvert.DeserializeObject<Clan>(jsonString);
 
             return myClan;
 
