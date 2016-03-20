@@ -24,6 +24,6 @@ namespace CocNET.Interfaces
         League GetLeagues(int id);
         League GetLeagues(string leagueName);
 
-
+        Clan GetClans(string clanTag);
     }
 }
