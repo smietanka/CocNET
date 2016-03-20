@@ -119,15 +119,34 @@ namespace CocNET
 
         public Clan GetClans(string clanTag)
         {
-
             string sUrl = string.Format("https://api.clashofclans.com/v1/clans/{0}", HttpUtility.UrlEncode(clanTag));
            
             string jsonString = REQUEST.GetJsonString(sUrl);
             var myClan = JsonConvert.DeserializeObject<Clan>(jsonString);
 
             return myClan;
+        }
 
-
+        public List<Member> GetClans(string clanTag, bool members)
+        {
+            Clan myClan = new Clan();
+            if(members)
+            {
+                string sUrl = string.Format("https://api.clashofclans.com/v1/clans/{0}/members", HttpUtility.UrlEncode(clanTag));
+                string jsonString = REQUEST.GetJsonString(sUrl);
+                var myClans = JsonConvert.DeserializeObject<Dictionary<string, List<Member>>>(jsonString);
+                List<Member> myMemberList;
+                myClans.TryGetValue("items", out myMemberList);
+                if(myMemberList != null)
+                {
+                    myClan.MemberList = myMemberList;
+                }
+            }
+            else
+            {
+                myClan = GetClans(clanTag);
+            }
+            return myClan.MemberList;
         }
     }
 }

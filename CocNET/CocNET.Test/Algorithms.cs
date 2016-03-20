@@ -69,6 +69,16 @@ namespace CocNET.Test
             var myClan = MY_CORE.GetClans(CLAN_TAG);
             Assert.IsTrue(myClan.Name == "Pandemia");
         }
+
+        [TestMethod, TestCategory("Algorithms")]
+        public void Get_Clan_Members()
+        {
+            var myClan = MY_CORE.GetClans(CLAN_TAG, true);
+            Assert.IsTrue(myClan.Any());
+
+            var myClanSecond = MY_CORE.GetClans(CLAN_TAG, false);
+            Assert.IsTrue(myClanSecond.Any());
+        }
         #endregion
 
     }
