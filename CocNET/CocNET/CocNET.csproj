@@ -64,7 +64,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\BadRequest.cs" />
     <Compile Include="Types\Clan.cs" />
-    <Compile Include="Types\Donation.cs" />
     <Compile Include="Types\League.cs" />
     <Compile Include="Types\Location.cs" />
     <Compile Include="Types\Member.cs" />
