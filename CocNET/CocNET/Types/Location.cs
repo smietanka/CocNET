@@ -15,5 +15,7 @@ namespace CocNET.Types
         public string Name { get; set; }
         [JsonProperty("isCountry")]
         public bool IsCountry { get; set; }
+        [JsonProperty("countryCode")]
+        public string CountryCode { get; set; }
     }
 }

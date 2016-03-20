@@ -8,11 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net;
+using System.Web;
 
 namespace CocNET
 {
     public class CocCore : ICocCore
     {
+        private const string API_URL = "https://api.clashofclans.com/v1/";
+        private const string API_URL_CLANS = "clans";
+        private const string API_URL_LEAGUES = "leagues";
+        private const string API_URL_LOCATIONS = "locations";
+
         private string TOKEN;
         private Request REQUEST;
         /// <summary>
@@ -109,6 +115,19 @@ namespace CocNET
         public League GetLeagues(string leagueName)
         {
             throw new NotImplementedException();
+        }
+
+        public Clan GetClans(string clanTag)
+        {
+
+            string sUrl = string.Format("https://api.clashofclans.com/v1/clans/{0}", HttpUtility.UrlEncode(clanTag));
+           
+            string jsonString = REQUEST.GetJsonString(sUrl);
+            var myClan = JsonConvert.DeserializeObject<Clan>(jsonString);
+
+            return myClan;
+
+
         }
     }
 }
