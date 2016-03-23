@@ -15,17 +15,30 @@ namespace CocNET.Methods
     public class Request
     {
         public string TOKEN;
+        /// <summary>
+        /// Initialize your request methods
+        /// </summary>
+        /// <param name="token">Your token.</param>
         public Request(string token)
         {
             TOKEN = token;
         }
 
+        /// <summary>
+        /// Get client what are connected to Clash Of Clans api.
+        /// </summary>
+        /// <returns></returns>
         public RestClient GetClient()
         {
             string apiUrl = "https://api.clashofclans.com/v1";
             RestClient result = new RestClient(apiUrl);
             return result;
         }
+        /// <summary>
+        /// Get your request to execute with authorization.
+        /// </summary>
+        /// <param name="call">Query part of url</param>
+        /// <returns></returns>
         public RestRequest GetRequest(string call)
         {
             RestRequest result = new RestRequest(call);

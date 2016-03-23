@@ -11,6 +11,12 @@ namespace CocNET.Methods
 {
     public class UrlBuilder
     {
+        /// <summary>
+        /// Create your query part of url.
+        /// </summary>
+        /// <param name="root">Parent directory</param>
+        /// <param name="query">Collection with key/value queries.</param>
+        /// <returns></returns>
         public static Uri BuildUri(string root, NameValueCollection query)
         {
             var collection = HttpUtility.ParseQueryString(string.Empty);

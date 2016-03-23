@@ -37,6 +37,7 @@ namespace CocNET
             TOKEN = token;
             REQUEST = new Request(token);
         }
+
         /// <summary>
         /// Get all locations from Clash Of Clans.
         /// </summary>
@@ -56,6 +57,7 @@ namespace CocNET
 
             return result;
         }
+
         /// <summary>
         /// Get all locations from Clash Of Clans where location is country.
         /// </summary>
@@ -76,6 +78,7 @@ namespace CocNET
             return result;
 
         }
+
         /// <summary>
         /// Get location by location id.
         /// </summary>
@@ -90,6 +93,7 @@ namespace CocNET
 
             return myLocation;
         }
+
         /// <summary>
         /// Get location by location name.
         /// </summary>
@@ -106,6 +110,10 @@ namespace CocNET
             return locationByName;
         }
 
+        /// <summary>
+        /// Get all leagues from Clash Of Clans.
+        /// </summary>
+        /// <returns></returns>
         public List<League> GetLeagues()
         {
             string jsonString = REQUEST.GetResponse(API_URL_LEAGUES);
@@ -121,6 +129,12 @@ namespace CocNET
 
             return result;
         }
+
+        /// <summary>
+        /// Get league by league id.
+        /// </summary>
+        /// <param name="id">League id. Can get from GetLeagues().</param>
+        /// <returns></returns>
         public League GetLeagues(int id)
         {
             League result = new League();
@@ -139,11 +153,27 @@ namespace CocNET
             return result;
         }
 
-        public League GetLeagues(string leagueName)
+        /// <summary>
+        /// Get list of league by league name.
+        /// </summary>
+        /// <param name="leagueName">League name what you search.</param>
+        /// <returns></returns>
+        public List<League> GetLeagues(string leagueName)
         {
-            throw new NotImplementedException();
+            List<League> result = new List<League>();
+            var myAllLeagues = GetLeagues();
+
+            //It's primitive searching...
+            result = myAllLeagues.Where(x => x.Name.ToLower().Contains(leagueName.ToLower())).ToList();
+
+            return result;
         }
 
+        /// <summary>
+        /// Get clan by clan tag.
+        /// </summary>
+        /// <param name="clanTag">Clan tag.</param>
+        /// <returns></returns>
         public Clan GetClans(string clanTag)
         {
             var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag));
@@ -155,29 +185,30 @@ namespace CocNET
             return myClan;
         }
 
-        public List<Member> GetClans(string clanTag, bool members)
+        /// <summary>
+        /// Get list of clan members
+        /// </summary>
+        /// <param name="clanTag">Clan tag to get members.</param>
+        /// <returns></returns>
+        public List<Member> GetClansMembers(string clanTag)
         {
             Clan myClan = new Clan();
-            if(members)
-            {
-                var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "members");
 
-                string jsonString = REQUEST.GetResponse(call);
+            var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "members");
 
-                var myClans = JsonConvert.DeserializeObject<Dictionary<string, List<Member>>>(jsonString);
-                List<Member> myMemberList;
-                myClans.TryGetValue("items", out myMemberList);
-                if(myMemberList != null)
-                {
-                    myClan.MemberList = myMemberList;
-                }
-            }
-            else
+            string jsonString = REQUEST.GetResponse(call);
+
+            var myClans = JsonConvert.DeserializeObject<Dictionary<string, List<Member>>>(jsonString);
+            List<Member> myMemberList;
+            myClans.TryGetValue("items", out myMemberList);
+            if (myMemberList != null)
             {
-                myClan = GetClans(clanTag);
+                myClan.MemberList = myMemberList;
             }
+
             return myClan.MemberList;
         }
+
         /// <summary>
         /// Search all clans by criteria.
         /// </summary>
@@ -221,7 +252,7 @@ namespace CocNET
             {
                 foreach (var eachClan in myClansWithoutMembers.ClanList)
                 {
-                    var clanMembers = GetClans(eachClan.Tag, true);
+                    var clanMembers = GetClansMembers(eachClan.Tag);
                     eachClan.MemberList = clanMembers;
                 }
                 result = myClansWithoutMembers;

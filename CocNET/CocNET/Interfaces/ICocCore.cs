@@ -16,11 +16,11 @@ namespace CocNET.Interfaces
 
         List<League> GetLeagues();
         League GetLeagues(int id);
-        League GetLeagues(string leagueName);
+        List<League> GetLeagues(string leagueName);
 
         Clan GetClans(string clanTag);
         SearchClan GetClans(SearchFilter searchFilter);
         SearchClan GetClans(SearchFilter searchFilter, bool withMember);
-        List<Member> GetClans(string clanTag, bool members);
+        List<Member> GetClansMembers(string clanTag);
     }
 }

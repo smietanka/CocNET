@@ -84,6 +84,14 @@ namespace CocNET.Test
 
 
         }
+
+        [TestMethod, TestCategory("Algorithms")]
+        public void Get_All_Leagues_By_Name()
+        {
+            var allLeagues = MY_CORE.GetLeagues("bronze");
+            Assert.IsTrue(allLeagues.Any());
+            Assert.IsTrue(allLeagues.Any(x => x.Name.ToLower().Contains("bronze")));
+        }
         #endregion
 
         #region CLANS
@@ -123,13 +131,9 @@ namespace CocNET.Test
         [TestMethod, TestCategory("Algorithms")]
         public void Get_Clan_Members()
         {
-            var myClan = MY_CORE.GetClans(CLAN_TAG, true);
+            var myClan = MY_CORE.GetClansMembers(CLAN_TAG);
             Assert.IsTrue(myClan.Any());
-
-            var myClanSecond = MY_CORE.GetClans(CLAN_TAG, false);
-            Assert.IsTrue(myClanSecond.Any());
         }
         #endregion
-
     }
 }
