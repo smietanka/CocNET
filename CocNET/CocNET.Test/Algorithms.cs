@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoreLinq;
 using System.Linq;
+using CocNET.Types;
 
 namespace CocNET.Test
 {
@@ -71,6 +72,19 @@ namespace CocNET.Test
         }
 
         [TestMethod, TestCategory("Algorithms")]
+        public void Search_Clan()
+        {
+            SearchFilter myFilter = new SearchFilter
+            {
+                Name = "Pandemia"
+            };
+
+            var myClan = MY_CORE.GetClans(myFilter);
+
+            Assert.IsTrue(myClan.Any());
+        }
+
+        [TestMethod, TestCategory("Algorithms")]
         public void Get_Clan_Members()
         {
             var myClan = MY_CORE.GetClans(CLAN_TAG, true);
@@ -82,4 +96,5 @@ namespace CocNET.Test
         #endregion
 
     }
+    public enum Dupa { dupa, chuj, cipa}
 }

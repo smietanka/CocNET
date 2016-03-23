@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net;
 using System.Web;
+using System.Collections.Specialized;
+using System.Reflection;
 
 namespace CocNET
 {
@@ -147,6 +149,47 @@ namespace CocNET
                 myClan = GetClans(clanTag);
             }
             return myClan.MemberList;
+        }
+        /// <summary>
+        /// Search all clans by criteria.
+        /// </summary>
+        /// <param name="searchFilter">SearchFilter with your criteria to search clans.</param>
+        /// <returns></returns>
+        public List<Clan> GetClans(SearchFilter searchFilter)
+        {
+            List<Clan> result = new List<Clan>();
+            NameValueCollection myCollection = new NameValueCollection();
+
+            Type myType = searchFilter.GetType();
+            IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
+
+            foreach (PropertyInfo prop in props)
+            {
+                object propValue = prop.GetValue(searchFilter, null);
+                var value = (propValue == null) || (propValue.Equals(0)) || (propValue.Equals(WarFrequency.undefined)) ? null : propValue.ToString();
+                myCollection.Add(prop.Name.ToLower(), value);
+            }
+
+            var url = UrlBuilder.BuildUri("https://api.clashofclans.com/v1/clans", myCollection);
+
+            string jsonString = REQUEST.GetJsonString(url.AbsoluteUri);
+            
+            SearchClan myClans = JsonConvert.DeserializeObject<SearchClan>(jsonString);
+
+            if(myClans.ClanList != null)
+            {
+                if(myClans.ClanList.Any())
+                {
+                    result.AddRange(myClans.ClanList);
+                }
+            }
+            else
+            {
+                myClans.ClanList = new List<Clan>();
+                result.AddRange(myClans.ClanList);
+            }
+            
+            return result;
         }
     }
 }

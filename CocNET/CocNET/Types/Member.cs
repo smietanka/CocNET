@@ -9,6 +9,8 @@ namespace CocNET.Types
 {
     public class Member
     {
+        [JsonProperty("tag")]
+        public string Tag { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("role")]

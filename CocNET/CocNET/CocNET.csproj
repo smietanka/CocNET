@@ -61,12 +61,18 @@
     <Compile Include="CocCore.cs" />
     <Compile Include="Interfaces\ICocCore.cs" />
     <Compile Include="Methods\Request.cs" />
+    <Compile Include="Methods\UrlBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\BadRequest.cs" />
     <Compile Include="Types\Clan.cs" />
+    <Compile Include="Types\Cursors.cs" />
     <Compile Include="Types\League.cs" />
     <Compile Include="Types\Location.cs" />
     <Compile Include="Types\Member.cs" />
+    <Compile Include="Types\Paging.cs" />
+    <Compile Include="Types\SearchClan.cs" />
+    <Compile Include="Types\SearchFilter.cs" />
+    <Compile Include="Types\WarFrequency.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
