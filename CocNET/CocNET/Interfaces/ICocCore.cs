@@ -25,7 +25,8 @@ namespace CocNET.Interfaces
         League GetLeagues(string leagueName);
 
         Clan GetClans(string clanTag);
-        List<Clan> GetClans(SearchFilter searchFilter);
+        SearchClan GetClans(SearchFilter searchFilter);
+        SearchClan GetClans(SearchFilter searchFilter, bool withMember);
 
         List<Member> GetClans(string clanTag, bool members);
 

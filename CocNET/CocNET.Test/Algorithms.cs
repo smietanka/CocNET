@@ -76,12 +76,25 @@ namespace CocNET.Test
         {
             SearchFilter myFilter = new SearchFilter
             {
-                Name = "Pandemia"
+                Name = "aaa"
             };
 
             var myClan = MY_CORE.GetClans(myFilter);
 
-            Assert.IsTrue(myClan.Any());
+            Assert.IsTrue(myClan.ClanList.Any());
+        }
+
+        [TestMethod, TestCategory("Algorithms")]
+        public void Search_Clan_With_Members()
+        {
+            SearchFilter myFilter = new SearchFilter
+            {
+                Name = "Pandemia"
+            };
+
+            var myClan = MY_CORE.GetClans(myFilter, true);
+
+            Assert.IsTrue(myClan.ClanList.Any());
         }
 
         [TestMethod, TestCategory("Algorithms")]

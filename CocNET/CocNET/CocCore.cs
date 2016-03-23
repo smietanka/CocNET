@@ -155,9 +155,8 @@ namespace CocNET
         /// </summary>
         /// <param name="searchFilter">SearchFilter with your criteria to search clans.</param>
         /// <returns></returns>
-        public List<Clan> GetClans(SearchFilter searchFilter)
+        public SearchClan GetClans(SearchFilter searchFilter)
         {
-            List<Clan> result = new List<Clan>();
             NameValueCollection myCollection = new NameValueCollection();
 
             Type myType = searchFilter.GetType();
@@ -175,20 +174,34 @@ namespace CocNET
             string jsonString = REQUEST.GetJsonString(url.AbsoluteUri);
             
             SearchClan myClans = JsonConvert.DeserializeObject<SearchClan>(jsonString);
+            
+            return myClans;
+        }
 
-            if(myClans.ClanList != null)
+        /// <summary>
+        /// Search all clans by criteria with clan members. This may take a while.
+        /// </summary>
+        /// <param name="searchFilter">SearchFilter with your criteria to search clans.</param>
+        /// <param name="withMember">True if you want search clans with clan members, else false.</param>
+        /// <returns></returns>
+        public SearchClan GetClans(SearchFilter searchFilter, bool withMember)
+        {
+            var result = new SearchClan();
+            var myClansWithoutMembers = GetClans(searchFilter);
+
+            if (withMember)
             {
-                if(myClans.ClanList.Any())
+                foreach (var eachClan in myClansWithoutMembers.ClanList)
                 {
-                    result.AddRange(myClans.ClanList);
+                    var clanMembers = GetClans(eachClan.Tag, true);
+                    eachClan.MemberList = clanMembers;
                 }
+                result = myClansWithoutMembers;
             }
             else
             {
-                myClans.ClanList = new List<Clan>();
-                result.AddRange(myClans.ClanList);
+                result = myClansWithoutMembers;
             }
-            
             return result;
         }
     }
