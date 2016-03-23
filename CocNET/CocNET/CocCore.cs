@@ -11,18 +11,19 @@ using System.Net;
 using System.Web;
 using System.Collections.Specialized;
 using System.Reflection;
+using RestSharp;
 
 namespace CocNET
 {
     public class CocCore : ICocCore
     {
-        private const string API_URL = "https://api.clashofclans.com/v1/";
         private const string API_URL_CLANS = "clans";
         private const string API_URL_LEAGUES = "leagues";
         private const string API_URL_LOCATIONS = "locations";
 
         private string TOKEN;
         private Request REQUEST;
+
         /// <summary>
         /// Initialize your core.
         /// </summary>
@@ -36,14 +37,13 @@ namespace CocNET
             TOKEN = token;
             REQUEST = new Request(token);
         }
-
         /// <summary>
         /// Get all locations from Clash Of Clans.
         /// </summary>
         /// <returns>List of location.</returns>
         public List<Location> GetLocations()
         {
-            string jsonString = REQUEST.GetJsonString("https://api.clashofclans.com/v1/locations");
+            string jsonString = REQUEST.GetResponse(API_URL_LOCATIONS);
 
             var myLocations = JsonConvert.DeserializeObject<Dictionary<string, List<Location>>>(jsonString);
 
@@ -63,7 +63,18 @@ namespace CocNET
         /// <returns>List of location.</returns>
         public List<Location> GetLocations(bool isCountry)
         {
-            throw new NotImplementedException();
+            List<Location> result = new List<Location>();
+            var allLocations = GetLocations();
+            if(isCountry)
+            {
+                result = allLocations.Where(x => x.IsCountry).ToList();
+            }
+            else
+            {
+                result = allLocations.Where(x => !x.IsCountry).ToList();
+            }
+            return result;
+
         }
         /// <summary>
         /// Get location by location id.
@@ -72,8 +83,9 @@ namespace CocNET
         /// <returns>Location.</returns>
         public Location GetLocations(int id)
         {
-            string url = string.Format("https://api.clashofclans.com/v1/locations/{0}", id);
-            string jsonString = REQUEST.GetJsonString(url);
+            string call = REQUEST.GetCall(API_URL_LOCATIONS, id);
+
+            string jsonString = REQUEST.GetResponse(call);
             var myLocation = JsonConvert.DeserializeObject<Location>(jsonString);
 
             return myLocation;
@@ -96,7 +108,7 @@ namespace CocNET
 
         public List<League> GetLeagues()
         {
-            string jsonString = REQUEST.GetJsonString("https://api.clashofclans.com/v1/leagues");
+            string jsonString = REQUEST.GetResponse(API_URL_LEAGUES);
 
             var myLeagues = JsonConvert.DeserializeObject<Dictionary<string, List<League>>>(jsonString);
 
@@ -111,7 +123,20 @@ namespace CocNET
         }
         public League GetLeagues(int id)
         {
-            throw new NotImplementedException();
+            League result = new League();
+            var allLeagues = GetLeagues();
+            var myLeague = allLeagues.Where(x => x.Id == id).FirstOrDefault();
+            if(myLeague != null)
+            {
+                result = myLeague;
+            }
+            else
+            {
+                result.Error = "true";
+                result.Reason = "Not found results.";
+                result.Message = "There is no league with this id number.";
+            }
+            return result;
         }
 
         public League GetLeagues(string leagueName)
@@ -121,9 +146,10 @@ namespace CocNET
 
         public Clan GetClans(string clanTag)
         {
-            string sUrl = string.Format("https://api.clashofclans.com/v1/clans/{0}", HttpUtility.UrlEncode(clanTag));
-           
-            string jsonString = REQUEST.GetJsonString(sUrl);
+            var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag));
+
+            string jsonString = REQUEST.GetResponse(call);
+
             var myClan = JsonConvert.DeserializeObject<Clan>(jsonString);
 
             return myClan;
@@ -134,8 +160,10 @@ namespace CocNET
             Clan myClan = new Clan();
             if(members)
             {
-                string sUrl = string.Format("https://api.clashofclans.com/v1/clans/{0}/members", HttpUtility.UrlEncode(clanTag));
-                string jsonString = REQUEST.GetJsonString(sUrl);
+                var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "members");
+
+                string jsonString = REQUEST.GetResponse(call);
+
                 var myClans = JsonConvert.DeserializeObject<Dictionary<string, List<Member>>>(jsonString);
                 List<Member> myMemberList;
                 myClans.TryGetValue("items", out myMemberList);
@@ -158,7 +186,7 @@ namespace CocNET
         public SearchClan GetClans(SearchFilter searchFilter)
         {
             NameValueCollection myCollection = new NameValueCollection();
-
+            Dictionary<string, string> myDictionary = new Dictionary<string, string>();
             Type myType = searchFilter.GetType();
             IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
 
@@ -166,12 +194,12 @@ namespace CocNET
             {
                 object propValue = prop.GetValue(searchFilter, null);
                 var value = (propValue == null) || (propValue.Equals(0)) || (propValue.Equals(WarFrequency.undefined)) ? null : propValue.ToString();
+
                 myCollection.Add(prop.Name.ToLower(), value);
             }
-
-            var url = UrlBuilder.BuildUri("https://api.clashofclans.com/v1/clans", myCollection);
-
-            string jsonString = REQUEST.GetJsonString(url.AbsoluteUri);
+            var url = REQUEST.GetCall(REQUEST.GetClient().BaseUrl.AbsoluteUri, API_URL_CLANS);
+            var call = UrlBuilder.BuildUri(url, myCollection);
+            string jsonString = REQUEST.GetResponse(API_URL_CLANS, call.Query);
             
             SearchClan myClans = JsonConvert.DeserializeObject<SearchClan>(jsonString);
             

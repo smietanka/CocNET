@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoreLinq;
 using System.Linq;
 using CocNET.Types;
+using CocNET.Methods;
+using RestSharp;
 
 namespace CocNET.Test
 {
@@ -18,6 +20,7 @@ namespace CocNET.Test
         {
             MY_CORE = new CocCore(TOKEN);
         }
+
         #region LOCATIONS
         [TestMethod, TestCategory("Algorithms")]
         public void Get_All_Locations()
@@ -27,7 +30,7 @@ namespace CocNET.Test
         }
 
         [TestMethod, TestCategory("Algorithms")]
-        public void Get_All_Locations_By_Id()
+        public void Get_Location_By_Id()
         {
             int id = 32000000;
             var myLocation = MY_CORE.GetLocations(id);
@@ -40,7 +43,7 @@ namespace CocNET.Test
         }
 
         [TestMethod, TestCategory("Algorithms")]
-        public void Get_All_Locations_By_Name()
+        public void Get_Location_By_Name()
         {
             string locationName = "Europe";
             var myLocation = MY_CORE.GetLocations(locationName);
@@ -52,6 +55,17 @@ namespace CocNET.Test
             Assert.IsTrue(myBadLocation.Reason == "notFound");
 
         }
+
+        [TestMethod, TestCategory("Algorithms")]
+        public void Get_All_Locations_Is_Country()
+        {
+            var myLocation = MY_CORE.GetLocations(true);
+            Assert.IsTrue(myLocation.Any(x => x.IsCountry));
+
+            var myFalseLocation = MY_CORE.GetLocations(false);
+
+            Assert.IsTrue(myFalseLocation.Any(x => !x.IsCountry));
+        }
         #endregion
 
         #region LEAGUES
@@ -60,6 +74,15 @@ namespace CocNET.Test
         {
             var allLeagues = MY_CORE.GetLeagues();
             Assert.IsTrue(allLeagues.Any());
+        }
+
+        [TestMethod, TestCategory("Algorithms")]
+        public void Get_League_By_Id()
+        {
+            var league = MY_CORE.GetLeagues(29000005);
+            Assert.IsTrue(league.Id == 29000005);
+
+
         }
         #endregion
 
@@ -109,5 +132,4 @@ namespace CocNET.Test
         #endregion
 
     }
-    public enum Dupa { dupa, chuj, cipa}
 }
