@@ -1,2 +1,3 @@
 language: csharp
 solution: CocNET.sln
+script: make build
