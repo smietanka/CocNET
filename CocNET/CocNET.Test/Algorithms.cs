@@ -12,7 +12,7 @@ namespace CocNET.Test
     public class Algorithms
     {
         public const string TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImYxZTJmODE3LTJkNTktNGJmNS05NGQ3LTA1YjZkY2E2NDg4ZiIsImlhdCI6MTQ1ODE2MDI2Niwic3ViIjoiZGV2ZWxvcGVyLzhmY2VhNGY3LWE4NTctMDkyOS1hYTgyLTVkM2I1YThmOWRlNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE3OC4zNy4xNzAuMjExIl0sInR5cGUiOiJjbGllbnQifV19.iZFcf2Tmrzdegx8-QaXr2-ajWcskzW3kN9Qe-SlcVDIxACIYi9hAZTuwM5vtQJCf3ehXpTGyTd9_XxsBBZLmXw"; //Example token
-        public const string CLAN_TAG = "#9UVJGPV0"; // Example clan Tag
+        public const string CLAN_TAG = "#9UVJGPV0"; // Example clan Tag -
         public CocCore MY_CORE;
 
         [TestInitialize]
