@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CocCore.cs" />
+    <Compile Include="Includes\Locations.cs" />
     <Compile Include="Interfaces\ICocCore.cs" />
     <Compile Include="Methods\Request.cs" />
     <Compile Include="Methods\UrlBuilder.cs" />

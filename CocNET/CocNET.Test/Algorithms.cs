@@ -5,6 +5,8 @@ using System.Linq;
 using CocNET.Types;
 using CocNET.Methods;
 using RestSharp;
+using System.Diagnostics;
+using CocNET.Includes;
 
 namespace CocNET.Test
 {
@@ -79,7 +81,8 @@ namespace CocNET.Test
         [TestMethod, TestCategory("Algorithms")]
         public void Get_Player_Ranking()
         {
-            int locationId = 32000187;
+            int locationId = Locations.GetLocationId(Locations.AllLocations.Poland);
+
             var myRankings = MY_CORE.GetRanking(locationId, RankingId.players);
             Assert.IsTrue(myRankings.PlayerRanking.Any());
 
@@ -153,5 +156,16 @@ namespace CocNET.Test
             Assert.IsTrue(myClan.Any());
         }
         #endregion
+
+        [TestMethod, TestCategory("Algorithms")]
+        public void Create_Enum()
+        {
+            var myRankings = MY_CORE.GetLocations();
+            foreach(var myRank in myRankings)
+            {
+                Trace.WriteLine(string.Format("{0} = {1},", myRank.Name.Replace(" ", "_").Replace(".", "_").Replace("&", "_").Replace("-","_").Replace("(", "_").Replace(")", "_").Replace("__","_").Replace("__", "_"), myRank.Id));
+            }
+
+        }
     }
 }

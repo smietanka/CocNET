@@ -48,7 +48,7 @@ namespace CocNET
 
             var myLocations = JsonConvert.DeserializeObject<Dictionary<string, List<Location>>>(jsonString);
 
-            var result = myLocations.Where(x => x.Key == "items").Select(y => y.Value).FirstOrDefault();
+            var result = myLocations.Where(x => x.Key == "items").Select(y => y.Value).FirstOrDefault().Where(z => !string.IsNullOrEmpty(z.Name)).ToList();
 
             if (result == null)
             {
