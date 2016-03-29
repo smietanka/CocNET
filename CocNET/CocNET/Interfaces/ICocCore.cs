@@ -22,6 +22,6 @@ namespace CocNET.Interfaces
         SearchClan GetClans(SearchFilter searchFilter);
         SearchClan GetClans(SearchFilter searchFilter, bool withMember);
         List<Member> GetClansMembers(string clanTag);
-        Ranking GetClans(int locationId, RankingId rankId);
+        Ranking GetRanking(int locationId, RankingId rankId);
     }
 }

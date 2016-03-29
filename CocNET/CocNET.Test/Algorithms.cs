@@ -71,7 +71,7 @@ namespace CocNET.Test
         public void Get_Clan_Ranking()
         {
             int locationId = 32000187;
-            var myRanking = MY_CORE.GetClans(locationId, RankingId.clans);
+            var myRanking = MY_CORE.GetRanking(locationId, RankingId.clans);
             Assert.IsTrue(myRanking.ClanRanking.Any());
 
         }
@@ -80,7 +80,7 @@ namespace CocNET.Test
         public void Get_Player_Ranking()
         {
             int locationId = 32000187;
-            var myRankings = MY_CORE.GetClans(locationId, RankingId.players);
+            var myRankings = MY_CORE.GetRanking(locationId, RankingId.players);
             Assert.IsTrue(myRankings.PlayerRanking.Any());
 
         }

@@ -264,7 +264,7 @@ namespace CocNET
             return result;
         }
 
-        public Ranking GetClans(int locationId, RankingId rankId)
+        public Ranking GetRanking(int locationId, RankingId rankId)
         {
             Ranking result = new Ranking();
             var myCall = REQUEST.GetCall(API_URL_LOCATIONS, locationId, "rankings", rankId);
