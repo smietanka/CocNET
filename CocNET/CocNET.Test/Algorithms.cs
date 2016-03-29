@@ -66,6 +66,24 @@ namespace CocNET.Test
 
             Assert.IsTrue(myFalseLocation.Any(x => !x.IsCountry));
         }
+
+        [TestMethod, TestCategory("Algorithms")]
+        public void Get_Clan_Ranking()
+        {
+            int locationId = 32000187;
+            var myRanking = MY_CORE.GetClans(locationId, RankingId.clans);
+            Assert.IsTrue(myRanking.ClanRanking.Any());
+
+        }
+
+        [TestMethod, TestCategory("Algorithms")]
+        public void Get_Player_Ranking()
+        {
+            int locationId = 32000187;
+            var myRankings = MY_CORE.GetClans(locationId, RankingId.players);
+            Assert.IsTrue(myRankings.PlayerRanking.Any());
+
+        }
         #endregion
 
         #region LEAGUES

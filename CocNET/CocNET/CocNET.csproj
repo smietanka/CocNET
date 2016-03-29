@@ -69,11 +69,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\BadRequest.cs" />
     <Compile Include="Types\Clan.cs" />
+    <Compile Include="Types\ClanRanking.cs" />
     <Compile Include="Types\Cursors.cs" />
     <Compile Include="Types\League.cs" />
     <Compile Include="Types\Location.cs" />
     <Compile Include="Types\Member.cs" />
     <Compile Include="Types\Paging.cs" />
+    <Compile Include="Types\Player.cs" />
+    <Compile Include="Types\PlayerRanking.cs" />
+    <Compile Include="Types\Ranking.cs" />
+    <Compile Include="Types\RankingId.cs" />
     <Compile Include="Types\SearchClan.cs" />
     <Compile Include="Types\SearchFilter.cs" />
     <Compile Include="Types\WarFrequency.cs" />

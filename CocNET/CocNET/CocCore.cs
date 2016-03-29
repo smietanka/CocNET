@@ -263,5 +263,21 @@ namespace CocNET
             }
             return result;
         }
+
+        public Ranking GetClans(int locationId, RankingId rankId)
+        {
+            Ranking result = new Ranking();
+            var myCall = REQUEST.GetCall(API_URL_LOCATIONS, locationId, "rankings", rankId);
+            var jsonString = REQUEST.GetResponse(myCall);
+            if(rankId == 0)
+            {
+                result.ClanRanking = JsonConvert.DeserializeObject<ClanRanking>(jsonString).ClansRanking;
+            }
+            else
+            {
+                result.PlayerRanking = JsonConvert.DeserializeObject<PlayerRanking>(jsonString).PlayersRanking;
+            }
+            return result;
+        }
     }
 }
