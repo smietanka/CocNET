@@ -9,18 +9,21 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net;
 using System.Web;
+using System.Collections.Specialized;
+using System.Reflection;
+using RestSharp;
 
 namespace CocNET
 {
     public class CocCore : ICocCore
     {
-        private const string API_URL = "https://api.clashofclans.com/v1/";
         private const string API_URL_CLANS = "clans";
         private const string API_URL_LEAGUES = "leagues";
         private const string API_URL_LOCATIONS = "locations";
 
         private string TOKEN;
         private Request REQUEST;
+
         /// <summary>
         /// Initialize your core.
         /// </summary>
@@ -41,11 +44,11 @@ namespace CocNET
         /// <returns>List of location.</returns>
         public List<Location> GetLocations()
         {
-            string jsonString = REQUEST.GetJsonString("https://api.clashofclans.com/v1/locations");
+            string jsonString = REQUEST.GetResponse(API_URL_LOCATIONS);
 
             var myLocations = JsonConvert.DeserializeObject<Dictionary<string, List<Location>>>(jsonString);
 
-            var result = myLocations.Where(x => x.Key == "items").Select(y => y.Value).FirstOrDefault();
+            var result = myLocations.Where(x => x.Key == "items").Select(y => y.Value).FirstOrDefault().Where(z => !string.IsNullOrEmpty(z.Name)).ToList();
 
             if (result == null)
             {
@@ -54,6 +57,7 @@ namespace CocNET
 
             return result;
         }
+
         /// <summary>
         /// Get all locations from Clash Of Clans where location is country.
         /// </summary>
@@ -61,8 +65,20 @@ namespace CocNET
         /// <returns>List of location.</returns>
         public List<Location> GetLocations(bool isCountry)
         {
-            throw new NotImplementedException();
+            List<Location> result = new List<Location>();
+            var allLocations = GetLocations();
+            if(isCountry)
+            {
+                result = allLocations.Where(x => x.IsCountry).ToList();
+            }
+            else
+            {
+                result = allLocations.Where(x => !x.IsCountry).ToList();
+            }
+            return result;
+
         }
+
         /// <summary>
         /// Get location by location id.
         /// </summary>
@@ -70,12 +86,14 @@ namespace CocNET
         /// <returns>Location.</returns>
         public Location GetLocations(int id)
         {
-            string url = string.Format("https://api.clashofclans.com/v1/locations/{0}", id);
-            string jsonString = REQUEST.GetJsonString(url);
+            string call = REQUEST.GetCall(API_URL_LOCATIONS, id);
+
+            string jsonString = REQUEST.GetResponse(call);
             var myLocation = JsonConvert.DeserializeObject<Location>(jsonString);
 
             return myLocation;
         }
+
         /// <summary>
         /// Get location by location name.
         /// </summary>
@@ -92,9 +110,13 @@ namespace CocNET
             return locationByName;
         }
 
+        /// <summary>
+        /// Get all leagues from Clash Of Clans.
+        /// </summary>
+        /// <returns></returns>
         public List<League> GetLeagues()
         {
-            string jsonString = REQUEST.GetJsonString("https://api.clashofclans.com/v1/leagues");
+            string jsonString = REQUEST.GetResponse(API_URL_LEAGUES);
 
             var myLeagues = JsonConvert.DeserializeObject<Dictionary<string, List<League>>>(jsonString);
 
@@ -107,27 +129,155 @@ namespace CocNET
 
             return result;
         }
+
+        /// <summary>
+        /// Get league by league id.
+        /// </summary>
+        /// <param name="id">League id. Can get from GetLeagues().</param>
+        /// <returns></returns>
         public League GetLeagues(int id)
         {
-            throw new NotImplementedException();
+            League result = new League();
+            var allLeagues = GetLeagues();
+            var myLeague = allLeagues.Where(x => x.Id == id).FirstOrDefault();
+            if(myLeague != null)
+            {
+                result = myLeague;
+            }
+            else
+            {
+                result.Error = "true";
+                result.Reason = "Not found results.";
+                result.Message = "There is no league with this id number.";
+            }
+            return result;
         }
 
-        public League GetLeagues(string leagueName)
+        /// <summary>
+        /// Get list of league by league name.
+        /// </summary>
+        /// <param name="leagueName">League name what you search.</param>
+        /// <returns></returns>
+        public List<League> GetLeagues(string leagueName)
         {
-            throw new NotImplementedException();
+            List<League> result = new List<League>();
+            var myAllLeagues = GetLeagues();
+
+            //It's primitive searching...
+            result = myAllLeagues.Where(x => x.Name.ToLower().Contains(leagueName.ToLower())).ToList();
+
+            return result;
         }
 
+        /// <summary>
+        /// Get clan by clan tag.
+        /// </summary>
+        /// <param name="clanTag">Clan tag.</param>
+        /// <returns></returns>
         public Clan GetClans(string clanTag)
         {
+            var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag));
 
-            string sUrl = string.Format("https://api.clashofclans.com/v1/clans/{0}", HttpUtility.UrlEncode(clanTag));
-           
-            string jsonString = REQUEST.GetJsonString(sUrl);
-            Clan myClan = JsonConvert.DeserializeObject<Clan>(jsonString);
+            string jsonString = REQUEST.GetResponse(call);
+
+            var myClan = JsonConvert.DeserializeObject<Clan>(jsonString);
 
             return myClan;
+        }
 
+        /// <summary>
+        /// Get list of clan members
+        /// </summary>
+        /// <param name="clanTag">Clan tag to get members.</param>
+        /// <returns></returns>
+        public List<Member> GetClansMembers(string clanTag)
+        {
+            Clan myClan = new Clan();
 
+            var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "members");
+
+            string jsonString = REQUEST.GetResponse(call);
+
+            var myClans = JsonConvert.DeserializeObject<Dictionary<string, List<Member>>>(jsonString);
+            List<Member> myMemberList;
+            myClans.TryGetValue("items", out myMemberList);
+            if (myMemberList != null)
+            {
+                myClan.MemberList = myMemberList;
+            }
+
+            return myClan.MemberList;
+        }
+
+        /// <summary>
+        /// Search all clans by criteria.
+        /// </summary>
+        /// <param name="searchFilter">SearchFilter with your criteria to search clans.</param>
+        /// <returns></returns>
+        public SearchClan GetClans(SearchFilter searchFilter)
+        {
+            NameValueCollection myCollection = new NameValueCollection();
+            Dictionary<string, string> myDictionary = new Dictionary<string, string>();
+            Type myType = searchFilter.GetType();
+            IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
+
+            foreach (PropertyInfo prop in props)
+            {
+                object propValue = prop.GetValue(searchFilter, null);
+                var value = (propValue == null) || (propValue.Equals(0)) || (propValue.Equals(WarFrequency.undefined)) ? null : propValue.ToString();
+
+                myCollection.Add(prop.Name.ToLower(), value);
+            }
+            var url = REQUEST.GetCall(REQUEST.GetClient().BaseUrl.AbsoluteUri, API_URL_CLANS);
+            var call = UrlBuilder.BuildUri(url, myCollection);
+            string jsonString = REQUEST.GetResponse(API_URL_CLANS, call.Query);
+            
+            SearchClan myClans = JsonConvert.DeserializeObject<SearchClan>(jsonString);
+            
+            return myClans;
+        }
+
+        /// <summary>
+        /// Search all clans by criteria with clan members. This may take a while.
+        /// </summary>
+        /// <param name="searchFilter">SearchFilter with your criteria to search clans.</param>
+        /// <param name="withMember">True if you want search clans with clan members, else false.</param>
+        /// <returns></returns>
+        public SearchClan GetClans(SearchFilter searchFilter, bool withMember)
+        {
+            var result = new SearchClan();
+            var myClansWithoutMembers = GetClans(searchFilter);
+
+            if (withMember)
+            {
+                foreach (var eachClan in myClansWithoutMembers.ClanList)
+                {
+                    var clanMembers = GetClansMembers(eachClan.Tag);
+                    eachClan.MemberList = clanMembers;
+                }
+                result = myClansWithoutMembers;
+            }
+            else
+            {
+                result = myClansWithoutMembers;
+            }
+            return result;
+        }
+
+        public Ranking GetRanking(int locationId, RankingId rankId)
+        {
+            Ranking result = new Ranking();
+            var myCall = REQUEST.GetCall(API_URL_LOCATIONS, locationId, "rankings", rankId);
+            var jsonString = REQUEST.GetResponse(myCall);
+            if(rankId == 0)
+            {
+                result.ClanRanking = JsonConvert.DeserializeObject<ClanRanking>(jsonString).ClansRanking;
+            }
+            else
+            {
+                result.PlayerRanking = JsonConvert.DeserializeObject<PlayerRanking>(jsonString).PlayersRanking;
+            }
+            return result;
         }
     }
 }

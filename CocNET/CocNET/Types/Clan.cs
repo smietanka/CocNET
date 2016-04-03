@@ -36,6 +36,9 @@ namespace CocNET.Types
         [JsonProperty("warWins")]
         public int WarWins { get; set; }
 
+        [JsonProperty("warWinStreak")]
+        public int WarWinStreak { get; set; }
+
         [JsonProperty("clanPoints")]
         public int ClanPoints { get; set; }
 
