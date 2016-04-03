@@ -156,16 +156,5 @@ namespace CocNET.Test
             Assert.IsTrue(myClan.Any());
         }
         #endregion
-
-        [TestMethod, TestCategory("Algorithms")]
-        public void Create_Enum()
-        {
-            var myRankings = MY_CORE.GetLocations();
-            foreach(var myRank in myRankings)
-            {
-                Trace.WriteLine(string.Format("{0} = {1},", myRank.Name.Replace(" ", "_").Replace(".", "_").Replace("&", "_").Replace("-","_").Replace("(", "_").Replace(")", "_").Replace("__","_").Replace("__", "_"), myRank.Id));
-            }
-
-        }
     }
 }
