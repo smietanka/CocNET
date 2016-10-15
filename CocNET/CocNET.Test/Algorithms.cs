@@ -1,12 +1,12 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MoreLinq;
+﻿using MoreLinq;
 using System.Linq;
 using CocNET.Types;
 using CocNET.Methods;
 using RestSharp;
 using System.Diagnostics;
 using CocNET.Includes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Xml;
 
 namespace CocNET.Test
 {
