@@ -1,21 +1,23 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MoreLinq;
+﻿using MoreLinq;
 using System.Linq;
 using CocNET.Types;
 using CocNET.Methods;
 using RestSharp;
 using System.Diagnostics;
 using CocNET.Includes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Xml;
+using CocNET.Types.Other;
+using CocNET.Interfaces;
 
 namespace CocNET.Test
 {
     [TestClass]
     public class Algorithms
     {
-        public const string TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImYxZTJmODE3LTJkNTktNGJmNS05NGQ3LTA1YjZkY2E2NDg4ZiIsImlhdCI6MTQ1ODE2MDI2Niwic3ViIjoiZGV2ZWxvcGVyLzhmY2VhNGY3LWE4NTctMDkyOS1hYTgyLTVkM2I1YThmOWRlNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE3OC4zNy4xNzAuMjExIl0sInR5cGUiOiJjbGllbnQifV19.iZFcf2Tmrzdegx8-QaXr2-ajWcskzW3kN9Qe-SlcVDIxACIYi9hAZTuwM5vtQJCf3ehXpTGyTd9_XxsBBZLmXw"; //Example token
+        public const string TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjY1ODZmYWJlLTU5NTEtNGVmMy1hYmUyLTZjNDJkN2JlYzNjYyIsImlhdCI6MTQ4NjUwMjAxMSwic3ViIjoiZGV2ZWxvcGVyLzhmY2VhNGY3LWE4NTctMDkyOS1hYTgyLTVkM2I1YThmOWRlNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE3OC4zNy4xNzEuMTE3Il0sInR5cGUiOiJjbGllbnQifV19.48kSRIHFrs47yf6S_ijX2a7zhEKxH7hg9Pk3rAlimwRqpvcDzMgqVBszQnxYj01U4j3XKTUhBEwFxae9J1uNxQ"; //Example token
         public const string CLAN_TAG = "#9UVJGPV0"; // Example clan Tag -
-        public CocCore MY_CORE;
+        public ICocCore MY_CORE;
 
         [TestInitialize]
         public void InitializeCore()
@@ -73,9 +75,15 @@ namespace CocNET.Test
         public void Get_Clan_Ranking()
         {
             int locationId = 32000187;
-            var myRanking = MY_CORE.GetRanking(locationId, RankingId.clans);
+            var myRanking = MY_CORE.GetLocationsRanking(locationId, RankingId.clans);
             Assert.IsTrue(myRanking.ClanRanking.Any());
+        }
 
+        [TestMethod, TestCategory("Algorithms")]
+        public void Get_Clan_WarLogs()
+        {
+            var warlogs = MY_CORE.GetClanWarLogs(CLAN_TAG);
+            Assert.IsTrue(warlogs.Any());
         }
 
         [TestMethod, TestCategory("Algorithms")]
@@ -83,7 +91,7 @@ namespace CocNET.Test
         {
             int locationId = Locations.GetLocationId(Locations.AllLocations.Poland);
 
-            var myRankings = MY_CORE.GetRanking(locationId, RankingId.players);
+            var myRankings = MY_CORE.GetLocationsRanking(locationId, RankingId.players);
             Assert.IsTrue(myRankings.PlayerRanking.Any());
 
         }

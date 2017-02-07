@@ -1,16 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using CocNET.Types.Other;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CocNET.Types
+namespace CocNET.Types.Locations
 {
-    public class SearchClan : BadRequest
+    class Locations : BadRequest
     {
         [JsonProperty("items")]
-        public List<Clan> ClanList { get; set; }
+        public List<Location> LocationList { get; set; }
         [JsonProperty("paging")]
         public Paging Paging { get; set; }
     }

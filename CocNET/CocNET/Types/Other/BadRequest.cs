@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace CocNET.Types
+namespace CocNET.Types.Other
 {
     public class BadRequest
     {

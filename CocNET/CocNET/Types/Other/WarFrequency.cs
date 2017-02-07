@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CocNET.Types
+namespace CocNET.Types.Other
 {
     public enum WarFrequency
     {
