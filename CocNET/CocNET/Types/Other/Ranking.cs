@@ -1,11 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using CocNET.Types.Clans;
+using CocNET.Types.Players;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CocNET.Types
+namespace CocNET.Types.Other
 {
     public class Ranking : BadRequest
     {

@@ -12,6 +12,12 @@ using System.Web;
 using System.Collections.Specialized;
 using System.Reflection;
 using RestSharp;
+using CocNET.Types.Other;
+using CocNET.Types.Locations;
+using CocNET.Types.Other.Other;
+using CocNET.Types.Clans;
+using CocNET.Types.Players;
+using CocNET.Types.Leagues;
 
 namespace CocNET
 {
@@ -30,7 +36,7 @@ namespace CocNET
         /// <param name="token">Your Clash Of Clans token.</param>
         public CocCore(string token)
         {
-            if(string.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(token))
             {
                 throw new WebException("Invalid token.");
             }
@@ -46,16 +52,9 @@ namespace CocNET
         {
             string jsonString = REQUEST.GetResponse(API_URL_LOCATIONS);
 
-            var myLocations = JsonConvert.DeserializeObject<Dictionary<string, List<Location>>>(jsonString);
+            var myLocations = JsonConvert.DeserializeObject<Locations>(jsonString);
 
-            var result = myLocations.Where(x => x.Key == "items").Select(y => y.Value).FirstOrDefault().Where(z => !string.IsNullOrEmpty(z.Name)).ToList();
-
-            if (result == null)
-            {
-                throw new Exception("There is no key like 'items'");
-            }
-
-            return result;
+            return myLocations.LocationList;
         }
 
         /// <summary>
@@ -67,7 +66,7 @@ namespace CocNET
         {
             List<Location> result = new List<Location>();
             var allLocations = GetLocations();
-            if(isCountry)
+            if (isCountry)
             {
                 result = allLocations.Where(x => x.IsCountry).ToList();
             }
@@ -118,16 +117,9 @@ namespace CocNET
         {
             string jsonString = REQUEST.GetResponse(API_URL_LEAGUES);
 
-            var myLeagues = JsonConvert.DeserializeObject<Dictionary<string, List<League>>>(jsonString);
+            var myLeagues = JsonConvert.DeserializeObject<Leagues>(jsonString);
 
-            var result = myLeagues.Where(x => x.Key == "items").Select(y => y.Value).FirstOrDefault();
-
-            if (result == null)
-            {
-                throw new Exception("There is no key like 'items'");
-            }
-
-            return result;
+            return myLeagues.LeaguesList;
         }
 
         /// <summary>
@@ -140,7 +132,7 @@ namespace CocNET
             League result = new League();
             var allLeagues = GetLeagues();
             var myLeague = allLeagues.Where(x => x.Id == id).FirstOrDefault();
-            if(myLeague != null)
+            if (myLeague != null)
             {
                 result = myLeague;
             }
@@ -192,21 +184,12 @@ namespace CocNET
         /// <returns></returns>
         public List<Member> GetClansMembers(string clanTag)
         {
-            Clan myClan = new Clan();
-
             var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "members");
 
             string jsonString = REQUEST.GetResponse(call);
 
-            var myClans = JsonConvert.DeserializeObject<Dictionary<string, List<Member>>>(jsonString);
-            List<Member> myMemberList;
-            myClans.TryGetValue("items", out myMemberList);
-            if (myMemberList != null)
-            {
-                myClan.MemberList = myMemberList;
-            }
-
-            return myClan.MemberList;
+            var members = JsonConvert.DeserializeObject<Members>(jsonString);
+            return members.MemberList;
         }
 
         /// <summary>
@@ -231,9 +214,9 @@ namespace CocNET
             var url = REQUEST.GetCall(REQUEST.GetClient().BaseUrl.AbsoluteUri, API_URL_CLANS);
             var call = UrlBuilder.BuildUri(url, myCollection);
             string jsonString = REQUEST.GetResponse(API_URL_CLANS, call.Query);
-            
+
             SearchClan myClans = JsonConvert.DeserializeObject<SearchClan>(jsonString);
-            
+
             return myClans;
         }
 
@@ -264,12 +247,12 @@ namespace CocNET
             return result;
         }
 
-        public Ranking GetRanking(int locationId, RankingId rankId)
+        public Ranking GetLocationsRanking(int locationId, RankingId rankId)
         {
             Ranking result = new Ranking();
             var myCall = REQUEST.GetCall(API_URL_LOCATIONS, locationId, "rankings", rankId);
             var jsonString = REQUEST.GetResponse(myCall);
-            if(rankId == 0)
+            if (rankId == 0)
             {
                 result.ClanRanking = JsonConvert.DeserializeObject<ClanRanking>(jsonString).ClansRanking;
             }
@@ -278,6 +261,16 @@ namespace CocNET
                 result.PlayerRanking = JsonConvert.DeserializeObject<PlayerRanking>(jsonString).PlayersRanking;
             }
             return result;
+        }
+
+        public List<WarLog> GetClanWarLogs(string clanTag)
+        {
+            var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "warlog");
+
+            string jsonString = REQUEST.GetResponse(call);
+
+            var members = JsonConvert.DeserializeObject<WarLogs>(jsonString);
+            return members.WarLogList;
         }
     }
 }

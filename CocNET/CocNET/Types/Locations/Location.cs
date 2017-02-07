@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using CocNET.Types.Other;
 
-namespace CocNET.Types
+namespace CocNET.Types.Locations
 {
     public class Location : BadRequest
     {
