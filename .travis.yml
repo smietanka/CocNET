@@ -2,7 +2,7 @@ language: csharp
 solution: CocNET.sln
 install:
 - nuget restore CocNET.sln
-- nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+- nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory ./CocNET/testrunner
 script:
 - xbuild /p:Configuration=Release CocNET.sln
 - mono ./CocNET/testrunner/NUnit.Runner.2.6.4/tools/nunit-console.exe ./CocNET/CocNET.Test/bin/Release/CocNET.Test.dll
