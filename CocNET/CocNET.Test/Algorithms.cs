@@ -5,35 +5,35 @@ using CocNET.Methods;
 using RestSharp;
 using System.Diagnostics;
 using CocNET.Includes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml;
 using CocNET.Types.Other;
 using CocNET.Interfaces;
+using NUnit.Framework;
 
 namespace CocNET.Test
 {
-    [TestClass]
+    [TestFixture]
     public class Algorithms
     {
         public const string TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjY1ODZmYWJlLTU5NTEtNGVmMy1hYmUyLTZjNDJkN2JlYzNjYyIsImlhdCI6MTQ4NjUwMjAxMSwic3ViIjoiZGV2ZWxvcGVyLzhmY2VhNGY3LWE4NTctMDkyOS1hYTgyLTVkM2I1YThmOWRlNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE3OC4zNy4xNzEuMTE3Il0sInR5cGUiOiJjbGllbnQifV19.48kSRIHFrs47yf6S_ijX2a7zhEKxH7hg9Pk3rAlimwRqpvcDzMgqVBszQnxYj01U4j3XKTUhBEwFxae9J1uNxQ"; //Example token
         public const string CLAN_TAG = "#9UVJGPV0"; // Example clan Tag -
         public ICocCore MY_CORE;
 
-        [TestInitialize]
+        [TestFixtureSetUp]
         public void InitializeCore()
         {
             MY_CORE = new CocCore(TOKEN);
         }
 
         #region LOCATIONS
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Get_All_Locations()
         {
             var allLocations = MY_CORE.GetLocations();
             Assert.IsTrue(allLocations.Any());
         }
 
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Get_Location_By_Id()
         {
             int id = 32000000;
@@ -46,7 +46,7 @@ namespace CocNET.Test
 
         }
 
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Get_Location_By_Name()
         {
             string locationName = "Europe";
@@ -60,7 +60,7 @@ namespace CocNET.Test
 
         }
 
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Get_All_Locations_Is_Country()
         {
             var myLocation = MY_CORE.GetLocations(true);
@@ -71,7 +71,7 @@ namespace CocNET.Test
             Assert.IsTrue(myFalseLocation.Any(x => !x.IsCountry));
         }
 
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Get_Clan_Ranking()
         {
             int locationId = 32000187;
@@ -79,14 +79,14 @@ namespace CocNET.Test
             Assert.IsTrue(myRanking.ClanRanking.Any());
         }
 
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Get_Clan_WarLogs()
         {
             var warlogs = MY_CORE.GetClanWarLogs(CLAN_TAG);
             Assert.IsTrue(warlogs.Any());
         }
 
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Get_Player_Ranking()
         {
             int locationId = Locations.GetLocationId(Locations.AllLocations.Poland);
@@ -98,14 +98,14 @@ namespace CocNET.Test
         #endregion
 
         #region LEAGUES
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Get_All_Leagues()
         {
             var allLeagues = MY_CORE.GetLeagues();
             Assert.IsTrue(allLeagues.Any());
         }
 
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Get_League_By_Id()
         {
             var league = MY_CORE.GetLeagues(29000005);
@@ -114,7 +114,7 @@ namespace CocNET.Test
 
         }
 
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Get_All_Leagues_By_Name()
         {
             var allLeagues = MY_CORE.GetLeagues("bronze");
@@ -124,14 +124,14 @@ namespace CocNET.Test
         #endregion
 
         #region CLANS
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Get_Clan()
         {
             var myClan = MY_CORE.GetClans(CLAN_TAG);
             Assert.IsTrue(myClan.Name == "Pandemia");
         }
 
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Search_Clan()
         {
             SearchFilter myFilter = new SearchFilter
@@ -144,7 +144,7 @@ namespace CocNET.Test
             Assert.IsTrue(myClan.ClanList.Any());
         }
 
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Search_Clan_With_Members()
         {
             SearchFilter myFilter = new SearchFilter
@@ -157,7 +157,7 @@ namespace CocNET.Test
             Assert.IsTrue(myClan.ClanList.Any());
         }
 
-        [TestMethod, TestCategory("Algorithms")]
+        [Test, Category("Algorithms")]
         public void Get_Clan_Members()
         {
             var myClan = MY_CORE.GetClansMembers(CLAN_TAG);
