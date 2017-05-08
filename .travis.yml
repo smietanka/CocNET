@@ -5,4 +5,4 @@ install:
 - nuget install NUnit.ConsolerRunner -Version 3.6.1
 script:
 - xbuild /p:Configuration=Release CocNET.sln
-- mono CocNET/CocNET/packages/NUnit.ConsoleRunner.3.6.1/tools/nunit-console.exe CocNET/CocNET/CocNET.Test/bin/Release/CocNET.Test.dll
+- mono /packages/NUnit.ConsoleRunner.3.6.1/tools/nunit-console.exe /CocNET.Test/bin/Release/CocNET.Test.dll
