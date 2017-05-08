@@ -2,8 +2,7 @@ language: csharp
 solution: CocNET.sln
 install:
 - nuget restore CocNET.sln
-- nuget install NUnit.ConsolerRunner -Version 3.6.1
 script:
-- xbuild /p:Configuration=Release CocNET.sln
+- xbuild /p:Configuration=Debug CocNET.sln
 - ls -all
-- mono packages/NUnit.ConsoleRunner.3.6.1/tools/nunit-console.exe CocNET.Test/bin/Release/CocNET.Test.dll
+- CocNET/packages/NUnit.ConsoleRunner.3.6.1/tools/nunit-console.exe CocNET/CocNET.Test/bin/Debug/CocNET.Test.dll
