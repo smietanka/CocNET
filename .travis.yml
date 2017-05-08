@@ -2,5 +2,4 @@ language: csharp
 solution: ./CocNET/CocNET.sln
 script:
 - xbuild ./CocNET/CocNET.sln
-- mono ./CocNET/packages/xunit.runner.console*/tools/xunit.console.exe ./CocNET/CocNET.Test/bin/Debug/CocNET.Test.dll
 - mono ./CocNET/packages/NUnit.Runners.*/tools/nunit-console.exe ./CocNET.Test/bin/Debug/CocNET.Test.dll
