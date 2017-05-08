@@ -19,7 +19,7 @@ namespace CocNET.Test
         public const string CLAN_TAG = "#9UVJGPV0"; // Example clan Tag -
         public ICocCore MY_CORE;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void InitializeCore()
         {
             MY_CORE = new CocCore(TOKEN);
