@@ -1,3 +1,4 @@
+![alt text](https://travis-ci.org/smietanka/CocNET.svg?branch=master)
 # CocNET
 Wrapper to Clash Of Clans API in C# .NET
 
