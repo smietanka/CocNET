@@ -1,4 +1,4 @@
-![alt text](https://travis-ci.org/smietanka/CocNET.svg?branch=master)
+[![Build Status](https://travis-ci.org/smietanka/CocNET.svg?branch=master)](https://travis-ci.org/smietanka/CocNET)
 # CocNET
 Wrapper to Clash Of Clans API in C# .NET
 
