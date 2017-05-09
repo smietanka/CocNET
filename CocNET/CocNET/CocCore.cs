@@ -118,7 +118,10 @@ namespace CocNET
             string jsonString = REQUEST.GetResponse(API_URL_LEAGUES);
 
             var myLeagues = JsonConvert.DeserializeObject<Leagues>(jsonString);
-
+            if(myLeagues.LeaguesList == null || !myLeagues.LeaguesList.Any())
+            {
+                throw new ArgumentNullException(string.Format("{0}. {1}. {2}", myLeagues.Error, myLeagues.Message, myLeagues.Reason));
+            }
             return myLeagues.LeaguesList;
         }
 
