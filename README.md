@@ -8,6 +8,7 @@ Add to your application reference to CocNET.dll
 In your application add: 
 ```
 using CocNET;
+using CocNET.Interfaces;
 ```
 
 Paste this code:
@@ -16,12 +17,20 @@ class Program
 {
     static void Main(string[] args)
     {
-        string token = "";
-        CocCore myCore = new CocCore(token);
-        foreach(var eachLeague in myCore.GetLeagues())
+        string token = "your token";
+        Container container = CocCore.Instance(token).Container;
+
+        ICocCoreLeagues leaguesCore = container.Resolve<ICocCoreLeagues>();
+        var leagues = leaguesCore.GetLeagues("crystal");
+        foreach (var eachLeague in leagues)
         {
             Console.WriteLine(eachLeague.Name);
         }
+        // Same with:
+        // - ICocCoreLocations
+        // - ICocCorePlayers
+        // - ICocCoreClans
+        Console.ReadKey();
     }
 }
 ```
