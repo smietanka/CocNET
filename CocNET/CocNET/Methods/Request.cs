@@ -14,7 +14,7 @@ namespace CocNET.Methods
 {
     public class Request
     {
-        public string TOKEN;
+        private string TOKEN;
         /// <summary>
         /// Initialize your request methods
         /// </summary>
@@ -45,25 +45,25 @@ namespace CocNET.Methods
             result.AddHeader("authorization", string.Format("Bearer {0}", TOKEN));
             return result;
         }
-        public string GetCall(params object[] values)
-        {
-            return string.Join("/", values);
-        }
 
-        public string GetResponse(string call, string query)
+        public T GetResponse<T>(string call, string query)
         {
             var client = GetClient();
             var request = GetRequest(call+query);
             var response = client.Execute(request);
-            return response.Content;
+            return JsonConvert.DeserializeObject<T>(response.Content);
         }
 
-        public string GetResponse(string call)
+        public T GetResponse<T>(string call)
         {
             var client = GetClient();
             var request = GetRequest(call);
             var response = client.Execute(request);
-            return response.Content;
+            return JsonConvert.DeserializeObject<T>(response.Content);
+        }
+        public string GetCall(params object[] values)
+        {
+            return string.Join("/", values);
         }
     }
 }

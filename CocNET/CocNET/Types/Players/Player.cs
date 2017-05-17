@@ -1,12 +1,10 @@
 ﻿using CocNET.Types.Clans;
 using CocNET.Types.Leagues;
 using CocNET.Types.Other;
+using CocNET.Types.Other.Game;
+using CocNET.Types.Other.Statistics;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CocNET.Types.Players
 {
@@ -32,5 +30,27 @@ namespace CocNET.Types.Players
         public Clan Clan { get; set; }
         [JsonProperty("league")]
         public League League { get; set; }
+        [JsonProperty("bestTrophies")]
+        public int BestTrophies { get; set; }
+        [JsonProperty("donations")]
+        public int Donations { get; set; }
+        [JsonProperty("donationsReceived")]
+        public int DonationsReceived { get; set; }
+        [JsonProperty("warStars")]
+        public int WarStars { get; set; }
+        [JsonProperty("role")]
+        public string Role { get; set; }
+        [JsonProperty("townHallLevel")]
+        public int TownHallLevel { get; set; }
+        [JsonProperty("legendStatistics")]
+        public LegendStatistics LegendStatistics { get; set; }
+        [JsonProperty("achievements")]
+        public List<Achievement> Achievements { get; set; }
+        [JsonProperty("troops")]
+        public List<Troop> Troops { get; set; }
+        [JsonProperty("heroes")]
+        public List<Hero> Heroes { get; set; }
+        [JsonProperty("spells")]
+        public List<Spell> Spells { get; set; }
     }
 }

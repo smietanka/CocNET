@@ -1,6 +1,5 @@
 language: csharp
-solution: ./cocnet.sln
-script:    # the following commands are just examples, use whatever your build process requires
-  - ./build.sh
-  - ./test.sh
-  - grep "Test Results" build.log
+solution: ./CocNET/CocNET.sln
+script:
+- xbuild /p:Configuration=Debug ./CocNET/CocNET.sln
+- mono ./CocNET/packages/NUnit.ConsoleRunner.3.6.1/tools/nunit3-console.exe ./CocNET/CocNET.Test/bin/Debug/CocNET.Test.dll
