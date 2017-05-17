@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CocNET.Types.Other;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace CocNET.Types.Clans
         [JsonProperty("result")]
         public string Result { get; set; }
 
-        [JsonProperty("endTime")]
-        public string EndTime { get; set; }
+        [JsonProperty("endTime"), JsonConverter(typeof(CustomDateTimeConverter))]
+        public DateTime EndTime { get; set; }
 
         [JsonProperty("teamSize")]
         public int TeamSize { get; set; }

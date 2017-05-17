@@ -27,7 +27,7 @@ namespace CocNET.Services
         /// Get all leagues from Clash Of Clans.
         /// </summary>
         /// <returns></returns>
-        public List<League> GetLeagues(int limit = 0, int after = 0, int before = 0)
+        public List<League> GetLeagues()
         {
             var myLeagues = REQUEST.GetResponse<Leagues>("leagues");
 
@@ -43,7 +43,7 @@ namespace CocNET.Services
         /// </summary>
         /// <param name="id">League id. Can get from GetLeagues().</param>
         /// <returns></returns>
-        public League GetLeague(int id)
+        public League GetLeagues(int id)
         {
             League result = new League();
             var allLeagues = GetLeagues();

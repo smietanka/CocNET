@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using CocNET.Types.Clans.CurrentWar;
 
 namespace CocNET.Services
 {
@@ -115,6 +116,15 @@ namespace CocNET.Services
             var warLogs = REQUEST.GetResponse<WarLogs>(call);
 
             return warLogs.WarLogList;
+        }
+
+        public War GetCurrentWar(string clanTag)
+        {
+            var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "currentwar");
+
+            var currentWar = REQUEST.GetResponse<War>(call);
+
+            return currentWar;
         }
     }
 }

@@ -15,5 +15,6 @@ namespace CocNET.Interfaces
         SearchClan GetClans(SearchFilter searchFilter);
         SearchClan GetClans(SearchFilter searchFilter, bool withMember);
         List<Member> GetClansMembers(string clanTag);
+        Types.Clans.CurrentWar.War GetCurrentWar(string clanTag);
     }
 }
