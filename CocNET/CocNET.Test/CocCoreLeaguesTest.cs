@@ -31,7 +31,7 @@ namespace CocNET.Test
         [Test, Category("LeaguesTest")]
         public void Get_League_By_Id()
         {
-            var league = LeaguesCore.GetLeagues(29000005);
+            var league = LeaguesCore.GetLeague(29000005);
             Assert.IsTrue(league.Id == 29000005);
         }
 

@@ -9,8 +9,10 @@ namespace CocNET.Interfaces
 {
     public interface ICocCoreLeagues
     {
-        List<League> GetLeagues();
-        League GetLeagues(int id);
+        List<League> GetLeagues(int limit = 0, int after = 0, int before = 0);
+        League GetLeague(int id);
         List<League> GetLeagues(string leagueName);
+
+
     }
 }
