@@ -66,5 +66,12 @@ namespace CocNET.Test
             var warlogs = ClansCore.GetClanWarLogs(CLAN_TAG);
             Assert.IsTrue(warlogs.Any());
         }
+
+        [Test, Category("ClansTest")]
+        public void Get_Clan_CurrentWar()
+        {
+            var currentWar = ClansCore.GetCurrentWar(CLAN_TAG);
+            Assert.IsNotNull(currentWar);
+        }
     }
 }

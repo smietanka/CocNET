@@ -1,4 +1,5 @@
 ﻿using CocNET.Types.Clans;
+using CocNET.Types.Clans.CurrentWar;
 using CocNET.Types.Other;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace CocNET.Interfaces
         SearchClan GetClans(SearchFilter searchFilter);
         SearchClan GetClans(SearchFilter searchFilter, bool withMember);
         List<Member> GetClansMembers(string clanTag);
+        War GetCurrentWar(string clanTag);
     }
 }

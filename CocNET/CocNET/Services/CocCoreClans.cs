@@ -1,6 +1,7 @@
 ﻿using CocNET.Interfaces;
 using CocNET.Methods;
 using CocNET.Types.Clans;
+using CocNET.Types.Clans.CurrentWar;
 using CocNET.Types.Other;
 using CocNET.Types.Other.Other;
 using System;
@@ -115,6 +116,15 @@ namespace CocNET.Services
             var warLogs = REQUEST.GetResponse<WarLogs>(call);
 
             return warLogs.WarLogList;
+        }
+
+        public War GetCurrentWar(string clanTag)
+        {
+            var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "currentwar");
+
+            var currentWar = REQUEST.GetResponse<War>(call);
+
+            return currentWar;
         }
     }
 }

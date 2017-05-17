@@ -81,9 +81,14 @@
     <Compile Include="Services\CocCoreLeagues.cs" />
     <Compile Include="Services\CocCoreLocations.cs" />
     <Compile Include="Services\CocCorePlayers.cs" />
+    <Compile Include="Types\Clans\CurrentWar\War.cs" />
+    <Compile Include="Types\Clans\CurrentWar\WarAttack.cs" />
+    <Compile Include="Types\Clans\CurrentWar\WarClan.cs" />
+    <Compile Include="Types\Clans\CurrentWar\WarMember.cs" />
     <Compile Include="Types\Clans\Opponent.cs" />
     <Compile Include="Types\Clans\WarLog.cs" />
     <Compile Include="Types\Clans\WarLogs.cs" />
+    <Compile Include="Types\Other\CustomDateTimeConverter.cs" />
     <Compile Include="Types\Other\Game\Achievement.cs" />
     <Compile Include="Types\Other\BadRequest.cs" />
     <Compile Include="Types\Clans\Clan.cs" />
