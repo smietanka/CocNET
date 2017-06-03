@@ -11,7 +11,7 @@ using CocNET;
 using CocNET.Interfaces;
 ```
 
-Paste this code:
+[Example] Paste this code:
 ```
 class Program
 {
