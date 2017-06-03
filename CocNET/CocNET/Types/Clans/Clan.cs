@@ -1,11 +1,7 @@
-﻿using CocNET.Types.Locations;
+using CocNET.Types.Locations;
 using CocNET.Types.Other;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CocNET.Types.Clans
 {
@@ -52,5 +48,8 @@ namespace CocNET.Types.Clans
 
         [JsonProperty("memberList")]
         public List<Member> MemberList { get; set; }
+
+        [JsonProperty("clanVersusPoints")]
+        public int clanVersusPoints { get; set; }
     }
 }
