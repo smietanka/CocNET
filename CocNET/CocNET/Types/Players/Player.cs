@@ -1,4 +1,4 @@
-﻿using CocNET.Types.Clans;
+using CocNET.Types.Clans;
 using CocNET.Types.Leagues;
 using CocNET.Types.Other;
 using CocNET.Types.Other.Game;
@@ -52,5 +52,13 @@ namespace CocNET.Types.Players
         public List<Hero> Heroes { get; set; }
         [JsonProperty("spells")]
         public List<Spell> Spells { get; set; }
+        [JsonProperty("versusTrophies")]
+        public int versusTrophies { get; set; }
+        [JsonProperty("bestVersusTrophies")]
+        public int bestVersusTrophies { get; set; }
+        [JsonProperty("versusBattleWins")]
+        public int versusBattleWins { get; set; }
+        [JsonProperty("builderHallLevel")]
+        public int builderHallLevel { get; set; }
     }
 }
