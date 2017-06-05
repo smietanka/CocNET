@@ -20,7 +20,6 @@ namespace CocNET.Methods
         public static Uri BuildUri(string root, NameValueCollection query)
         {
             var collection = HttpUtility.ParseQueryString(string.Empty);
-
             foreach (var key in query.Cast<string>().Where(key => !string.IsNullOrEmpty(query[key])))
             {
                 collection[key] = query[key];
