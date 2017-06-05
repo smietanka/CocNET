@@ -25,7 +25,6 @@ namespace CocNET.Methods
             {
                 collection[key] = query[key];
             }
-
             var builder = new UriBuilder(root) { Query = collection.ToString() };
             return builder.Uri;
         }
