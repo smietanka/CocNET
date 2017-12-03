@@ -14,51 +14,43 @@ namespace CocNET.Methods
 {
     public class Request
     {
-        private string TOKEN;
+        private string Token;
+
+        public static RestClient Client = new RestClient("https://api.clashofclans.com/v1");
         /// <summary>
         /// Initialize your request methods
         /// </summary>
         /// <param name="token">Your token.</param>
         public Request(string token)
         {
-            TOKEN = token;
+            Token = token;
         }
 
         /// <summary>
-        /// Get client what are connected to Clash Of Clans api.
-        /// </summary>
-        /// <returns></returns>
-        public RestClient GetClient()
-        {
-            string apiUrl = "https://api.clashofclans.com/v1";
-            RestClient result = new RestClient(apiUrl);
-            return result;
-        }
-        /// <summary>
         /// Get your request to execute with authorization.
         /// </summary>
-        /// <param name="call">Query part of url</param>
+        /// <param name="resource">Query part of url</param>
         /// <returns></returns>
-        public RestRequest GetRequest(string call)
+        public RestRequest GetRequest(string resource)
         {
-            RestRequest result = new RestRequest(call);
-            result.AddHeader("authorization", string.Format("Bearer {0}", TOKEN));
-            return result;
+            RestRequest request = new RestRequest(resource, Method.GET);
+            request.AddHeader("authorization", string.Format("Bearer {0}", Token));
+            request.AddHeader("Accept", "application/json");
+
+            return request;
         }
 
         public T GetResponse<T>(string call, string query)
         {
-            var client = GetClient();
             var request = GetRequest(call+query);
-            var response = client.Execute(request);
+            var response = Client.Execute(request);
             return JsonConvert.DeserializeObject<T>(response.Content);
         }
 
         public T GetResponse<T>(string call)
         {
-            var client = GetClient();
             var request = GetRequest(call);
-            var response = client.Execute(request);
+            var response = Client.Execute(request);
             return JsonConvert.DeserializeObject<T>(response.Content);
         }
         public string GetCall(params object[] values)

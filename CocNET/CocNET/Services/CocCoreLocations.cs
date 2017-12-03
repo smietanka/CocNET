@@ -19,11 +19,7 @@ namespace CocNET.Services
 
         public CocCoreLocations(Request requestClient)
         {
-            if (requestClient == null)
-            {
-                throw new ArgumentNullException("RequestClient is null.");
-            }
-            REQUEST = requestClient;
+            REQUEST = requestClient ?? throw new ArgumentNullException("RequestClient is null.");
         }
         /// <summary>
         /// Get all locations from Clash Of Clans.

@@ -17,16 +17,12 @@ namespace CocNET.Services
         private Request REQUEST;
         public CocCorePlayers(Request requestClient)
         {
-            if (requestClient == null)
-            {
-                throw new ArgumentNullException("RequestClient is null.");
-            }
-            REQUEST = requestClient;
+            REQUEST = requestClient ?? throw new ArgumentNullException("RequestClient is null.");
         }
 
         public Player GetPlayer(string playerTag)
         {
-            var call = REQUEST.GetCall("players", HttpUtility.UrlEncode(playerTag));
+            var call = REQUEST.GetCall(API_URL_PLAYERS, HttpUtility.UrlEncode(playerTag));
 
             return REQUEST.GetResponse<Player>(call); ;
         }

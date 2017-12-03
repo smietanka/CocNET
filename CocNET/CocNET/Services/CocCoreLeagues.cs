@@ -12,15 +12,11 @@ namespace CocNET.Services
     public class CocCoreLeagues : ICocCoreLeagues
     {
         private const string API_URL_LEAGUES = "leagues";
-        private Request REQUEST;
+        private Request Request;
 
         public CocCoreLeagues(Request requestClient)
         {
-            if (requestClient == null)
-            {
-                throw new ArgumentNullException("RequestClient is null.");
-            }
-            REQUEST = requestClient;
+            Request = requestClient ?? throw new ArgumentNullException("RequestClient is null.");
         }
 
         /// <summary>
@@ -29,7 +25,7 @@ namespace CocNET.Services
         /// <returns></returns>
         public List<League> GetLeagues(int limit = 0, int after = 0, int before = 0)
         {
-            var myLeagues = REQUEST.GetResponse<Leagues>("leagues");
+            var myLeagues = Request.GetResponse<Leagues>(API_URL_LEAGUES);
 
             if (myLeagues.LeaguesList == null || !myLeagues.LeaguesList.Any())
             {

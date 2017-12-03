@@ -18,15 +18,11 @@ namespace CocNET.Services
     public class CocCoreClans : ICocCoreClans
     {
         private const string API_URL_CLANS = "clans";
-        private Request REQUEST;
+        private Request Request;
 
         public CocCoreClans(Request requestClient)
         {
-            if (requestClient == null)
-            {
-                throw new ArgumentNullException("RequestClient is null.");
-            }
-            REQUEST = requestClient;
+            Request = requestClient ?? throw new ArgumentNullException("RequestClient is null.");
         }
         /// <summary>
         /// Get clan by clan tag.
@@ -35,9 +31,9 @@ namespace CocNET.Services
         /// <returns></returns>
         public Clan GetClans(string clanTag)
         {
-            var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag));
+            var call = Request.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag));
 
-            var myClan = REQUEST.GetResponse<Clan>(call);
+            var myClan = Request.GetResponse<Clan>(call);
 
             return myClan;
         }
@@ -49,9 +45,9 @@ namespace CocNET.Services
         /// <returns></returns>
         public List<Member> GetClansMembers(string clanTag)
         {
-            var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "members");
+            var call = Request.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "members");
 
-            var members = REQUEST.GetResponse<Members>(call);
+            var members = Request.GetResponse<Members>(call);
             return members.MemberList;
         }
 
@@ -74,10 +70,10 @@ namespace CocNET.Services
 
                 myCollection.Add(prop.Name.ToLower(), value);
             }
-            var url = REQUEST.GetCall(REQUEST.GetClient().BaseUrl.AbsoluteUri, API_URL_CLANS);
+            var url = Request.GetCall(Request.Client.BaseUrl.AbsoluteUri, API_URL_CLANS);
             var call = UrlBuilder.BuildUri(url, myCollection);
 
-            var myClans = REQUEST.GetResponse<SearchClan>(API_URL_CLANS, call.Query);
+            var myClans = Request.GetResponse<SearchClan>(API_URL_CLANS, call.Query);
 
             return myClans;
         }
@@ -111,18 +107,18 @@ namespace CocNET.Services
 
         public List<WarLog> GetClanWarLogs(string clanTag)
         {
-            var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "warlog");
+            var call = Request.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "warlog");
 
-            var warLogs = REQUEST.GetResponse<WarLogs>(call);
+            var warLogs = Request.GetResponse<WarLogs>(call);
 
             return warLogs.WarLogList;
         }
 
         public War GetCurrentWar(string clanTag)
         {
-            var call = REQUEST.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "currentwar");
+            var call = Request.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "currentwar");
 
-            var currentWar = REQUEST.GetResponse<War>(call);
+            var currentWar = Request.GetResponse<War>(call);
 
             return currentWar;
         }
