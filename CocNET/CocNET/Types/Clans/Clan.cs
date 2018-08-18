@@ -50,6 +50,6 @@ namespace CocNET.Types.Clans
         public List<Member> MemberList { get; set; }
 
         [JsonProperty("clanVersusPoints")]
-        public int clanVersusPoints { get; set; }
+        public int ClanVersusPoints { get; set; }
     }
 }

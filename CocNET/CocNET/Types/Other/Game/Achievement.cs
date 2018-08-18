@@ -19,5 +19,7 @@ namespace CocNET.Types.Other.Game
         public int Target { get; set; }
         [JsonProperty("completionInfo")]
         public string CompletionInfo { get; set; }
+        [JsonProperty("village")]
+        public int Village { get; set; }
     }
 }

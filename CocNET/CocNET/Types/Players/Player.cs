@@ -53,12 +53,12 @@ namespace CocNET.Types.Players
         [JsonProperty("spells")]
         public List<Spell> Spells { get; set; }
         [JsonProperty("versusTrophies")]
-        public int versusTrophies { get; set; }
+        public int VersusTrophies { get; set; }
         [JsonProperty("bestVersusTrophies")]
-        public int bestVersusTrophies { get; set; }
+        public int BestVersusTrophies { get; set; }
         [JsonProperty("versusBattleWins")]
-        public int versusBattleWins { get; set; }
+        public int VersusBattleWins { get; set; }
         [JsonProperty("builderHallLevel")]
-        public int builderHallLevel { get; set; }
+        public int BuilderHallLevel { get; set; }
     }
 }

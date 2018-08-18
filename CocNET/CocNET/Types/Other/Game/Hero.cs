@@ -15,5 +15,8 @@ namespace CocNET.Types.Other.Game
         public int Level { get; set; }
         [JsonProperty("maxLevel")]
         public int MaxLevel { get; set; }
+
+        [JsonProperty("village")]
+        public int Village { get; set; }
     }
 }

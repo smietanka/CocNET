@@ -29,7 +29,7 @@ namespace CocNET.Services
 
             if (myLeagues.LeaguesList == null || !myLeagues.LeaguesList.Any())
             {
-                throw new ArgumentNullException(string.Format("{0}. {1}. {2}", myLeagues.Error, myLeagues.Message, myLeagues.Reason));
+                throw new ArgumentNullException(string.Format("{0}. {1}", myLeagues.Message, myLeagues.Reason));
             }
             return myLeagues.LeaguesList;
         }
@@ -50,7 +50,6 @@ namespace CocNET.Services
             }
             else
             {
-                result.Error = "true";
                 result.Reason = "Not found results.";
                 result.Message = "There is no league with this id number.";
             }

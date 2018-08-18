@@ -1,8 +1,6 @@
-﻿using System;
-using NUnit.Framework;
-using CocNET.Interfaces;
+﻿using CocNET.Interfaces;
 using CocNET.Types.Other;
-using MoreLinq;
+using NUnit.Framework;
 using System.Linq;
 
 namespace CocNET.Test
