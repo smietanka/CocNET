@@ -18,7 +18,7 @@ namespace CocNET.Test
         [OneTimeSetUp]
         public void InitializeCore()
         {
-            LeaguesCore = CocCore.Instance(TOKEN).Container.Resolve<ICocCoreLeagues>();
+            LeaguesCore = new CocCore(TOKEN).Container.Resolve<ICocCoreLeagues>();
         }
 
         [Test, Category("LeaguesTest")]

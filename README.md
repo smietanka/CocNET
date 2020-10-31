@@ -18,7 +18,7 @@ class Program
     static void Main(string[] args)
     {
         string token = "your token";
-        Container container = CocCore.Instance(token).Container;
+        Container container = new CocCore(token).Container;
 
         ICocCoreLeagues leaguesCore = container.Resolve<ICocCoreLeagues>();
         var leagues = leaguesCore.GetLeagues("crystal");

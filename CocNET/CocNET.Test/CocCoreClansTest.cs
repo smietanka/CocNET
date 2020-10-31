@@ -16,7 +16,7 @@ namespace CocNET.Test
         [OneTimeSetUp]
         public void InitializeCore()
         {
-            ClansCore = CocCore.Instance(TOKEN).Container.Resolve<ICocCoreClans>();
+            ClansCore = new CocCore(TOKEN).Container.Resolve<ICocCoreClans>();
         }
 
         [Test, Category("ClansTest")]
