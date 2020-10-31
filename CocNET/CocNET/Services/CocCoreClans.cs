@@ -3,14 +3,12 @@ using CocNET.Methods;
 using CocNET.Types.Clans;
 using CocNET.Types.Clans.CurrentWar;
 using CocNET.Types.Other;
+using CocNET.Types.Clans.LeagueWar;
 using CocNET.Types.Other.Other;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace CocNET.Services
@@ -117,8 +115,30 @@ namespace CocNET.Services
         public War GetCurrentWar(string clanTag)
         {
             var call = Request.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "currentwar");
-
+            
             var currentWar = Request.GetResponse<War>(call);
+
+            return currentWar;
+        }
+
+        public LeagueWar GetCurrentWarLeague(string clanTag)
+        {
+            var call = Request.GetCall(API_URL_CLANS, HttpUtility.UrlEncode(clanTag), "currentwar", "leaguegroup");
+
+            var currentWar = Request.GetResponse<LeagueWar>(call);
+
+            return currentWar;
+        }
+        /// <summary>
+        /// Warning! This is war Tag not clan Tag!!
+        /// </summary>
+        /// <param name="warTag"></param>
+        /// <returns></returns>
+        public LeagueWarRound GetCurrentWarLeagueRound(string warTag)
+        {
+            var call = Request.GetCall("clanwarleagues", "wars", HttpUtility.UrlEncode(warTag));
+
+            var currentWar = Request.GetResponse<LeagueWarRound>(call);
 
             return currentWar;
         }

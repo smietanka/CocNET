@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 using Newtonsoft.Json;
-using CocNET.Types;
 using RestSharp;
-using System.Collections.Specialized;
 
 namespace CocNET.Methods
 {
@@ -36,7 +28,6 @@ namespace CocNET.Methods
             RestRequest request = new RestRequest(resource, Method.GET);
             request.AddHeader("authorization", string.Format("Bearer {0}", Token));
             request.AddHeader("Accept", "application/json");
-
             return request;
         }
 
@@ -44,6 +35,10 @@ namespace CocNET.Methods
         {
             var request = GetRequest(call+query);
             var response = Client.Execute(request);
+            if (response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                throw new TokenExpiredException(response.Content); 
+            }
             return JsonConvert.DeserializeObject<T>(response.Content);
         }
 
@@ -51,6 +46,10 @@ namespace CocNET.Methods
         {
             var request = GetRequest(call);
             var response = Client.Execute(request);
+            if (response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                throw new TokenExpiredException(response.Content);
+            }
             return JsonConvert.DeserializeObject<T>(response.Content);
         }
         public string GetCall(params object[] values)

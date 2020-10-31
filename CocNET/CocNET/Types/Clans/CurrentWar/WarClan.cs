@@ -32,6 +32,9 @@ namespace CocNET.Types.Clans.CurrentWar
         [JsonProperty("destructionPercentage")]
         public decimal DestructionPercentage { get; set; }
 
+        [JsonProperty("expEarned")]
+        public decimal ExpEarned { get; set; }
+
         [JsonProperty("members")]
         public List<WarMember> Members { get; set; }
     }

@@ -34,7 +34,6 @@
   <ItemGroup>
     <Reference Include="Funq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=95c13cd3fe8e976a, processorArchitecture=MSIL">
       <HintPath>..\packages\Funq.1.0.0\lib\net40\Funq.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="MoreLinq, Version=1.4.18916.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
       <HintPath>..\packages\morelinq.1.4.0\lib\net35\MoreLinq.dll</HintPath>
@@ -69,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CocCore.cs" />
+    <Compile Include="Exception\TokenExpiredException.cs" />
     <Compile Include="Includes\Locations.cs" />
     <Compile Include="Interfaces\ICocCoreClans.cs" />
     <Compile Include="Interfaces\ICocCoreLeagues.cs" />
@@ -85,6 +85,11 @@
     <Compile Include="Types\Clans\CurrentWar\WarAttack.cs" />
     <Compile Include="Types\Clans\CurrentWar\WarClan.cs" />
     <Compile Include="Types\Clans\CurrentWar\WarMember.cs" />
+    <Compile Include="Types\Clans\LeagueWar\LeagueClan.cs" />
+    <Compile Include="Types\Clans\LeagueWar\LeagueMember.cs" />
+    <Compile Include="Types\Clans\LeagueWar\LeagueRounds.cs" />
+    <Compile Include="Types\Clans\LeagueWar\LeagueWar.cs" />
+    <Compile Include="Types\Clans\LeagueWar\LeagueWarRounds.cs" />
     <Compile Include="Types\Clans\Opponent.cs" />
     <Compile Include="Types\Clans\WarLog.cs" />
     <Compile Include="Types\Clans\WarLogs.cs" />
