@@ -18,7 +18,7 @@ namespace CocNET.Test
         [OneTimeSetUp]
         public void InitializeCore()
         {
-            LocationsCore = CocCore.Instance(TOKEN).Container.Resolve<ICocCoreLocations>();
+            LocationsCore = new CocCore(TOKEN).Container.Resolve<ICocCoreLocations>();
         }
 
         [Test, Category("LocationsTest")]
